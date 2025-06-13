@@ -411,7 +411,7 @@ class Select extends Component<SelectProps> {
             isHighlighted,
             children
           })
-        : renderOptionLabel
+        : (renderOptionLabel as React.ReactNode)
     }
 
     let optionProps: Partial<OptionsItemProps> = {
@@ -710,11 +710,17 @@ class Select extends Component<SelectProps> {
           // Also on iOS Chrome with role='combobox' it announces unnecessarily
           // that its 'read-only' and that this is a 'textfield', see INSTUI-4500
           role:
-            utils.isSafari() || utils.isAndroidOrIOS() ? 'button' : 'combobox',
+            utils.isSafari() ||
+            utils.isAndroidOrIOS() ||
+            (interaction === 'disabled' && utils.isChromium())
+              ? 'button'
+              : 'combobox',
           title: inputValue,
           'aria-autocomplete': undefined,
           'aria-readonly': true
         }
+      : interaction === 'disabled' && utils.isChromium()
+      ? { role: 'button' }
       : {}
 
     // backdoor to autocomplete attr to work around chrome autofill issues

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.20.0](https://github.com/instructure/instructure-ui/compare/v10.19.1...v10.20.0) (2025-06-13)
+
+
+### Bug Fixes
+
+* **many:** update dependencies, browsersdb and moment timezone database ([3813636](https://github.com/instructure/instructure-ui/commit/3813636458c901ad4bc74a4d5ae015cb55defcb2))
+* **ui-top-nav-bar,ui-popover,ui-drilldown:** automatically set aria-expanded, allow override with shouldSetAriaExpanded ([b8e1367](https://github.com/instructure/instructure-ui/commit/b8e13674a2e700e44162a29ca61ead4fd98ce193))
+
+
+
+
+
+## [10.19.1](https://github.com/instructure/instructure-ui/compare/v10.19.0...v10.19.1) (2025-06-05)
+
+
+### Bug Fixes
+
+* **ui-drilldown:** fix highlighting first drilldown option if it is in a group ([3cc159b](https://github.com/instructure/instructure-ui/commit/3cc159bb0b6591bfb10eeeb6558dd384b09649d6))
+
+
+
+
+
 # [10.19.0](https://github.com/instructure/instructure-ui/compare/v10.18.1...v10.19.0) (2025-06-03)
 
 

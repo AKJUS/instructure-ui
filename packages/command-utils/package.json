@@ -1,6 +1,6 @@
 {
   "name": "@instructure/command-utils",
-  "version": "10.19.0",
+  "version": "10.20.0",
   "description": "Node CLI utilities made by Instructure Inc.",
   "author": "Instructure, Inc. Engineering and Product Design",
   "type": "module",
@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "chalk": "^5.3.0",
+    "chalk": "^5.4.1",
     "cross-spawn": "^7.0.6",
     "which": "^4.0.0"
   },
