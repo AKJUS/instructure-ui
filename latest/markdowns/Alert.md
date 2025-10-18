@@ -80,217 +80,99 @@ ensure that element has the correct ARIA attributes.
 For more information about live regions, see
 [this MDN article](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions).
 
-- ```js
-  class Example extends React.Component {
-    constructor(props) {
-      super(props)
+```js
+---
+type: example
+---
+const Example = () => {
+  const [alerts, setAlerts] = useState([])
+  const [count, setcount] = useState(0)
 
-      this.state = {
-        alerts: []
-      }
+  const variants = ['info', 'success', 'warning', 'error']
 
-      this.i = 0
-      this.variants = ['info', 'success', 'warning', 'error']
-      this.politeness = ['polite', 'assertive']
-    }
-
-    addAlert() {
-      const variant = this.variants[this.i++ % this.variants.length]
-      const politeness = Math.random() < 0.5 ? 'polite' : 'assertive'
-      const alerts = [...this.state.alerts]
-      const key = new Number(this.i)
-      alerts.push({
-        key,
+  const addAlert = () => {
+    const variant = variants[count % variants.length]
+    const politeness = Math.random() < 0.5 ? 'polite' : 'assertive'
+    setAlerts([
+      ...alerts,
+      {
+        key: count,
         variant,
-        politeness,
-        onDismiss: () => this.closeAlert(key)
-      })
-      this.setState({ alerts })
-    }
-
-    closeAlert(key) {
-      const alerts = this.state.alerts.filter((alert) => {
-        return alert.key !== key
-      })
-      this.setState({ alerts })
-    }
-
-    getScreenReaderLabel(variant) {
-      const labels = {
-        info: 'Information, ',
-        success: 'Success, ',
-        warning: 'Warning, ',
-        error: 'Error, '
+        politeness
       }
-      return labels[variant] || ''
-    }
-
-    render() {
-      return (
-        <div>
-          <Button onClick={this.addAlert.bind(this)}>Add Alert</Button>
-          {this.state.alerts.map((alert) => {
-            return (
-              <View key={alert.key} display="block" margin="small 0">
-                <Alert
-                  variant={alert.variant}
-                  renderCloseButtonLabel="Close"
-                  onDismiss={alert.onDismiss}
-                  liveRegion={() => document.getElementById('flash-messages')}
-                  liveRegionPoliteness={alert.politeness}
-                  margin="small 0"
-                  variantScreenReaderLabel={this.getScreenReaderLabel(
-                    alert.variant
-                  )}
-                >
-                  This is {alert.politeness === 'polite' ? 'a' : 'an'}{' '}
-                  {alert.politeness} {alert.variant} alert
-                </Alert>
-              </View>
-            )
-          })}
-        </div>
-      )
-    }
+    ])
+    setcount(count + 1)
   }
 
-  render(<Example />)
-  ```
+  const closeAlert = (key) =>
+    setAlerts(alerts.filter((alert) => alert.key !== key))
 
-- ```js
-  const Example = () => {
-    const [alerts, setAlerts] = useState([])
-    const [count, setcount] = useState(0)
+  return (
+    <div>
+      <Button onClick={addAlert}>Add Alert</Button>
+      {alerts.map((alert) => {
+        return (
+          <View key={alert.key} display="block" margin="small 0">
+            <Alert
+              variant={alert.variant}
+              renderCloseButtonLabel="Close"
+              onDismiss={() => closeAlert(alert.key)}
+              liveRegion={() => document.getElementById('flash-messages')}
+              liveRegionPoliteness={alert.politeness}
+              margin="small 0"
+            >
+              This is {alert.politeness === 'polite' ? 'a' : 'an'}{' '}
+              {alert.politeness} {alert.variant} alert
+            </Alert>
+          </View>
+        )
+      })}
+    </div>
+  )
+}
 
-    const variants = ['info', 'success', 'warning', 'error']
-
-    const addAlert = () => {
-      const variant = variants[count % variants.length]
-      const politeness = Math.random() < 0.5 ? 'polite' : 'assertive'
-      setAlerts([
-        ...alerts,
-        {
-          key: count,
-          variant,
-          politeness
-        }
-      ])
-      setcount(count + 1)
-    }
-
-    const closeAlert = (key) =>
-      setAlerts(alerts.filter((alert) => alert.key !== key))
-
-    return (
-      <div>
-        <Button onClick={addAlert}>Add Alert</Button>
-        {alerts.map((alert) => {
-          return (
-            <View key={alert.key} display="block" margin="small 0">
-              <Alert
-                variant={alert.variant}
-                renderCloseButtonLabel="Close"
-                onDismiss={() => closeAlert(alert.key)}
-                liveRegion={() => document.getElementById('flash-messages')}
-                liveRegionPoliteness={alert.politeness}
-                margin="small 0"
-              >
-                This is {alert.politeness === 'polite' ? 'a' : 'an'}{' '}
-                {alert.politeness} {alert.variant} alert
-              </Alert>
-            </View>
-          )
-        })}
-      </div>
-    )
-  }
-
-  render(<Example />)
-  ```
+render(<Example />)
+```
 
 Alerts can be used to emit screenreader only messages too
 
-- ```js
-  class Example extends React.Component {
-    constructor(props) {
-      super(props)
+```js
+---
+type: example
+---
+const Example = () => {
+  const [message, setMessage] = useState(null)
+  const [count, setCount] = useState(1)
 
-      this.state = {
-        message: null,
-        count: 1
-      }
-    }
-
-    changeMessage = () => {
-      this.setState({
-        message: `this is message ${this.state.count}`,
-        count: this.state.count + 1
-      })
-    }
-
-    clearMessage = () => {
-      this.setState({
-        message: null,
-        count: this.state.count + 1
-      })
-    }
-
-    render() {
-      return (
-        <div>
-          <Button onClick={this.changeMessage}>Change Message</Button>
-          <Button onClick={this.clearMessage} margin="0 0 0 small">
-            Clear Message
-          </Button>
-          <Alert
-            liveRegion={() => document.getElementById('flash-messages')}
-            isLiveRegionAtomic
-            screenReaderOnly
-          >
-            {this.state.message}
-          </Alert>
-        </div>
-      )
-    }
+  const changeMessage = () => {
+    setMessage(`this is message ${count}`)
+    setCount(count + 1)
   }
 
-  render(<Example />)
-  ```
-
-- ```js
-  const Example = () => {
-    const [message, setMessage] = useState(null)
-    const [count, setCount] = useState(1)
-
-    const changeMessage = () => {
-      setMessage(`this is message ${count}`)
-      setCount(count + 1)
-    }
-
-    const clearMessage = () => {
-      setMessage(null)
-      setCount(count + 1)
-    }
-
-    return (
-      <div>
-        <Button onClick={changeMessage}>Change Message</Button>
-        <Button onClick={clearMessage} margin="0 0 0 small">
-          Clear Message
-        </Button>
-        <Alert
-          liveRegion={() => document.getElementById('flash-messages')}
-          isLiveRegionAtomic
-          screenReaderOnly
-        >
-          {message}
-        </Alert>
-      </div>
-    )
+  const clearMessage = () => {
+    setMessage(null)
+    setCount(count + 1)
   }
 
-  render(<Example />)
-  ```
+  return (
+    <div>
+      <Button onClick={changeMessage}>Change Message</Button>
+      <Button onClick={clearMessage} margin="0 0 0 small">
+        Clear Message
+      </Button>
+      <Alert
+        liveRegion={() => document.getElementById('flash-messages')}
+        isLiveRegionAtomic
+        screenReaderOnly
+      >
+        {message}
+      </Alert>
+    </div>
+  )
+}
+
+render(<Example />)
+```
 
 When Alerts are used inline, the shadow can be removed with the `hasShadow` property.
 
@@ -372,19 +254,19 @@ type: embed
 |-----------|------|------|----------|---------|-------------|
 | Alert | children | `ReactNode` | No | `null` | content to be rendered within Alert |
 | Alert | variant | `'info' \| 'success' \| 'warning' \| 'error'` | No | `'info'` | Determines color and icon |
-| Alert | margin | `Spacing` | No | `'x-small 0'` | Valid values are `0`, `none`, `auto`, `xxx-small`, `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large`. Apply these values via familiar CSS-like shorthand. For example: `margin="small auto large"`. |
+| Alert | variantScreenReaderLabel | `string` | No | - | How the screen reader should announce the alert variant. While the `variant` prop sets the color and icon for the alert component, this label should be a textual representation of that information. So e.g. if the variant is `info`, this label could be "Information," or "Information alert,". Note the `,` at the end of the label which helps the screenreader to be more natural sounding. |
 | Alert | liveRegion | `Element \| null \| (() => Element \| null \| undefined)` | No | - | A DOM element or function that returns an element where screenreader alerts will be placed. |
 | Alert | liveRegionPoliteness | `'polite' \| 'assertive'` | No | `'assertive'` | Choose the politeness level of screenreader alerts, sets the value of `aria-live`. When regions are specified as `polite`, assistive technologies will notify users of updates but generally do not interrupt the current task, and updates take low priority. When regions are specified as `assertive`, assistive technologies will immediately notify the user, and could potentially clear the speech queue of previous updates. |
 | Alert | isLiveRegionAtomic | `boolean` | No | `false` | Value for the `aria-atomic` attribute. `aria-atomic` controls how much is read when a change happens. Should only the specific thing that changed be read or should the entire element be read. |
 | Alert | screenReaderOnly | `boolean` | No | `false` | If the alert should only be visible to screen readers |
 | Alert | timeout | `number` | No | `0` | Milliseconds until the Alert is dismissed automatically |
-| Alert | renderCloseButtonLabel | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Close button label. Can be a React component |
+| Alert | margin | `Spacing` | No | `'x-small 0'` | Valid values are `0`, `none`, `auto`, `xxx-small`, `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large`. Apply these values via familiar CSS-like shorthand. For example: `margin="small auto large"`. |
+| Alert | renderCloseButtonLabel | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Close button label. Can be a React component |
 | Alert | onDismiss | `() => void` | No | - | Callback after the alert is closed |
 | Alert | transition | `'none' \| 'fade'` | No | `'fade'` | Transition used to make the alert appear and disappear |
 | Alert | open | `boolean` | No | `true` | if open transitions from truthy to falsey, it's a signal to close and unmount the alert. This is necessary to close the alert from the outside and still run the transition. |
 | Alert | hasShadow | `boolean` | No | `true` | If the alert should have a shadow. |
-| Alert | variantScreenReaderLabel | `string` | No | - | How the screen reader should announce the alert variant. While the `variant` prop sets the color and icon for the alert component, this label should be a textual representation of that information. So e.g. if the variant is `info`, this label could be "Information," or "Information alert,". Note the `,` at the end of the label which helps the screenreader to be more natural sounding. |
-| Alert | renderCustomIcon | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | An icon, or function that returns an icon. Setting it will override the variant's icon. |
+| Alert | renderCustomIcon | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | An icon, or function that returns an icon. Setting it will override the variant's icon. |
 
 ### Usage
 

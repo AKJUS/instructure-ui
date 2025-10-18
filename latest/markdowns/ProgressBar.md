@@ -276,204 +276,100 @@ type: example
 
 The `shouldAnimate` prop makes the progress bar animate the transition between value changes, giving it a smoother look.
 
-- ```js
-  class Example extends React.Component {
-    MIN = 0
-    MAX = 100
+```js
+---
+type: example
+---
+const Example = () => {
+  const MIN = 0
+  const MAX = 100
 
-    state = {
-      value: 25,
-      shouldAnimate: true
-    }
+  const [value, setValue] = useState(25)
+  const [shouldAnimate, setShouldAnimate] = useState(true)
 
-    bound(n) {
-      if (n < this.MIN) return this.MIN
-      if (n > this.MAX) return this.MAX
-      return n
-    }
-
-    setNumber(n) {
-      return { value: this.bound(n) }
-    }
-
-    handleChange = (event, value) => {
-      const newValue = Number(value)
-
-      if (isNaN(newValue)) {
-        return
-      }
-
-      this.setState({
-        value: newValue
-      })
-    }
-
-    handleDecrement = (event) =>
-      this.setState(({ value }) => {
-        if (Number.isInteger(value)) {
-          return this.setNumber(value - 1)
-        }
-        return this.setNumber(Math.floor(value))
-      })
-
-    handleIncrement = (event) =>
-      this.setState(({ value }) => {
-        if (Number.isInteger(value)) {
-          return this.setNumber(value + 1)
-        }
-        return this.setNumber(Math.ceil(value))
-      })
-
-    handleBlur = (event) =>
-      this.setState(({ value }) => {
-        return this.setNumber(Math.round(value))
-      })
-
-    render() {
-      return (
-        <div>
-          <View
-            as="div"
-            background="primary"
-            padding="medium"
-            margin="0 0 large 0"
-          >
-            <FormFieldGroup
-              description={<ScreenReaderContent>Settings</ScreenReaderContent>}
-            >
-              <Checkbox
-                label="Should animate"
-                checked={this.state.shouldAnimate}
-                onChange={() => {
-                  this.setState({ shouldAnimate: !this.state.shouldAnimate })
-                }}
-                variant="toggle"
-              />
-
-              <NumberInput
-                renderLabel={`ProgressBar value (${this.MIN}-${this.MAX})`}
-                display="inline-block"
-                onBlur={this.handleBlur}
-                onChange={this.handleChange}
-                onDecrement={this.handleDecrement}
-                onIncrement={this.handleIncrement}
-                showArrows
-                value={this.state.value}
-              />
-            </FormFieldGroup>
-          </View>
-
-          <ProgressBar
-            screenReaderLabel="Loading completion"
-            valueNow={this.state.value}
-            valueMax={this.MAX}
-            shouldAnimate={this.state.shouldAnimate}
-            renderValue={({ valueNow, valueMax }) => {
-              return <Text>{Math.round((valueNow / valueMax) * 100)}%</Text>
-            }}
-            formatScreenReaderValue={({ valueNow, valueMax }) => {
-              return Math.round((valueNow / valueMax) * 100) + ' percent'
-            }}
-          />
-        </div>
-      )
-    }
+  const bound = (n) => {
+    if (n < MIN) return MIN
+    if (n > MAX) return MAX
+    return n
   }
 
-  render(<Example />)
-  ```
-
-- ```js
-  const Example = () => {
-    const MIN = 0
-    const MAX = 100
-
-    const [value, setValue] = useState(25)
-    const [shouldAnimate, setShouldAnimate] = useState(true)
-
-    const bound = (n) => {
-      if (n < MIN) return MIN
-      if (n > MAX) return MAX
-      return n
+  const handleChange = (event, value) => {
+    const newValue = Number(value)
+    if (isNaN(newValue)) {
+      return
     }
+    setValue(newValue)
+  }
 
-    const handleChange = (event, value) => {
-      const newValue = Number(value)
-      if (isNaN(newValue)) {
-        return
-      }
-      setValue(newValue)
+  const handleDecrement = () => {
+    if (Number.isInteger(value)) {
+      setValue((value) => bound(value - 1))
     }
+    setValue((value) => bound(Math.floor(value)))
+  }
 
-    const handleDecrement = () => {
-      if (Number.isInteger(value)) {
-        setValue((value) => bound(value - 1))
-      }
-      setValue((value) => bound(Math.floor(value)))
+  const handleIncrement = () => {
+    if (Number.isInteger(value)) {
+      setValue((value) => bound(value + 1))
     }
+    setValue((value) => bound(Math.ceil(value)))
+  }
 
-    const handleIncrement = () => {
-      if (Number.isInteger(value)) {
-        setValue((value) => bound(value + 1))
-      }
-      setValue((value) => bound(Math.ceil(value)))
-    }
+  const handleBlur = () => {
+    setValue((value) => bound(Math.round(value)))
+  }
 
-    const handleBlur = () => {
-      setValue((value) => bound(Math.round(value)))
-    }
-
-    return (
-      <div>
-        <View
-          as="div"
-          background="primary"
-          padding="medium"
-          margin="0 0 large 0"
+  return (
+    <div>
+      <View
+        as="div"
+        background="primary"
+        padding="medium"
+        margin="0 0 large 0"
+      >
+        <FormFieldGroup
+          description={<ScreenReaderContent>Settings</ScreenReaderContent>}
         >
-          <FormFieldGroup
-            description={<ScreenReaderContent>Settings</ScreenReaderContent>}
-          >
-            <Checkbox
-              label="Should animate"
-              checked={shouldAnimate}
-              onChange={() => {
-                setShouldAnimate((shouldAnimate) => !shouldAnimate)
-              }}
-              variant="toggle"
-            />
+          <Checkbox
+            label="Should animate"
+            checked={shouldAnimate}
+            onChange={() => {
+              setShouldAnimate((shouldAnimate) => !shouldAnimate)
+            }}
+            variant="toggle"
+          />
 
-            <NumberInput
-              renderLabel={`ProgressBar value (${MIN}-${MAX})`}
-              display="inline-block"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              onDecrement={handleDecrement}
-              onIncrement={handleIncrement}
-              showArrows
-              value={value}
-            />
-          </FormFieldGroup>
-        </View>
+          <NumberInput
+            renderLabel={`ProgressBar value (${MIN}-${MAX})`}
+            display="inline-block"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onDecrement={handleDecrement}
+            onIncrement={handleIncrement}
+            showArrows
+            value={value}
+          />
+        </FormFieldGroup>
+      </View>
 
-        <ProgressBar
-          screenReaderLabel="Loading completion"
-          valueNow={value}
-          valueMax={MAX}
-          shouldAnimate={shouldAnimate}
-          renderValue={({ valueNow, valueMax }) => {
-            return <Text>{Math.round((valueNow / valueMax) * 100)}%</Text>
-          }}
-          formatScreenReaderValue={({ valueNow, valueMax }) => {
-            return Math.round((valueNow / valueMax) * 100) + ' percent'
-          }}
-        />
-      </div>
-    )
-  }
+      <ProgressBar
+        screenReaderLabel="Loading completion"
+        valueNow={value}
+        valueMax={MAX}
+        shouldAnimate={shouldAnimate}
+        renderValue={({ valueNow, valueMax }) => {
+          return <Text>{Math.round((valueNow / valueMax) * 100)}%</Text>
+        }}
+        formatScreenReaderValue={({ valueNow, valueMax }) => {
+          return Math.round((valueNow / valueMax) * 100) + ' percent'
+        }}
+      />
+    </div>
+  )
+}
 
-  render(<Example />)
-  ```
+render(<Example />)
+```
 
 ```js
 ---
@@ -497,7 +393,7 @@ type: embed
 | ProgressBar | valueNow | `Values['valueNow']` | No | `0` | Receives the progress of the event |
 | ProgressBar | formatScreenReaderValue | `(values: Values) => string` | No | `({ valueNow, valueMax }: Values) =>
 `${valueNow} / ${valueMax}`` | A function for formatting the text provided to screen readers via `aria-valuenow` |
-| ProgressBar | renderValue | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | A function to format the displayed value. If null the value will not display. Takes `valueNow` and `valueMax` as parameters. |
+| ProgressBar | renderValue | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | A function to format the displayed value. If null the value will not display. Takes `valueNow` and `valueMax` as parameters. |
 | ProgressBar | color | `'primary' \| 'primary-inverse'` | No | `'primary'` | Controls the overall color scheme of the component |
 | ProgressBar | meterColor | `\| ((values: Values) => ProgressBarMeterColor) \| ProgressBarMeterColor` | No | `({ valueNow, valueMax }: Values) =>
 valueNow / valueMax >= 1 ? 'success' : 'brand'` | Control the color of the progress meter. Defaults to showing theme success color on completion, based on `valueNow` and `valueMax`. |

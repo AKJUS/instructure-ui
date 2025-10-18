@@ -168,85 +168,44 @@ type: example
 
 It's best practice to make the complete text of a truncated element available via a [Tooltip](#Tooltip).
 
-- ```js
-  class Example extends React.Component {
-    state = {
-      isTruncated: false
-    }
+```js
+---
+type: example
+---
+const Example = (props) => {
+  const [isTruncated, setIsTruncated] = useState(false)
 
-    handleUpdate = (isTruncated) => {
-      if (this.state.isTruncated !== isTruncated) {
-        this.setState({ isTruncated })
-      }
-    }
-
-    renderLink() {
-      return (
-        <Link href="#">
-          <TruncateText onUpdate={this.handleUpdate}>
-            {this.props.message}
-          </TruncateText>
-        </Link>
-      )
-    }
-
-    render() {
-      return (
-        <View as="div" padding="xx-small none" maxWidth="230px" withVisualDebug>
-          {this.state.isTruncated ? (
-            <Tooltip
-              renderTip={this.props.message}
-              mountNode={() => document.getElementById('main')}
-            >
-              {this.renderLink()}
-            </Tooltip>
-          ) : (
-            this.renderLink()
-          )}
-        </View>
-      )
+  const handleUpdate = (newIsTruncated) => {
+    if (isTruncated !== newIsTruncated) {
+      setIsTruncated(newIsTruncated)
     }
   }
-  render(
-    <Example message="A tooltip will display only when this text is truncated" />
+
+  const renderLink = () => (
+    <Link href="#">
+      <TruncateText onUpdate={handleUpdate}>{props.message}</TruncateText>
+    </Link>
   )
-  ```
 
-- ```js
-  const Example = (props) => {
-    const [isTruncated, setIsTruncated] = useState(false)
-
-    const handleUpdate = (newIsTruncated) => {
-      if (isTruncated !== newIsTruncated) {
-        setIsTruncated(newIsTruncated)
-      }
-    }
-
-    const renderLink = () => (
-      <Link href="#">
-        <TruncateText onUpdate={handleUpdate}>{props.message}</TruncateText>
-      </Link>
-    )
-
-    return (
-      <View as="div" padding="xx-small none" maxWidth="230px" withVisualDebug>
-        {isTruncated ? (
-          <Tooltip
-            renderTip={props.message}
-            mountNode={() => document.getElementById('main')}
-          >
-            {renderLink()}
-          </Tooltip>
-        ) : (
-          renderLink()
-        )}
-      </View>
-    )
-  }
-  render(
-    <Example message="A tooltip will display only when this text is truncated" />
+  return (
+    <View as="div" padding="xx-small none" maxWidth="230px" withVisualDebug>
+      {isTruncated ? (
+        <Tooltip
+          renderTip={props.message}
+          mountNode={() => document.getElementById('main')}
+        >
+          {renderLink()}
+        </Tooltip>
+      ) : (
+        renderLink()
+      )}
+    </View>
   )
-  ```
+}
+render(
+  <Example message="A tooltip will display only when this text is truncated" />
+)
+```
 
 ### Guidelines
 
@@ -273,14 +232,14 @@ type: embed
 | Component | Prop | Type | Required | Default | Description |
 |-----------|------|------|----------|---------|-------------|
 | TruncateText | children | `React.ReactNode` | Yes | - | The content to be truncated. |
+| TruncateText | debounce | `number` | No | `0` | Debounce delay in milliseconds |
+| TruncateText | onUpdate | `(isTruncated: boolean, truncatedText?: string) => void` | No | - | Callback when truncated text has changed |
 | TruncateText | maxLines | `'auto' \| number` | No | `1` | Number of lines to allow before truncating. `auto` will fit to parent. Default is 1. |
 | TruncateText | position | `'end' \| 'middle'` | No | `'end'` | Where to place the ellipsis within the string. Default is 'end' |
+| TruncateText | shouldTruncateWhenInvisible | `boolean` | No | - | Force truncation of invisible elements (hack; will be removed in favor of a better fix) |
 | TruncateText | truncate | `'character' \| 'word'` | No | `'character'` | Add ellipsis after words or after any character. Default is 'character' |
 | TruncateText | ellipsis | `string` | No | `'\u2026'` | A string to use as the ellipsis |
 | TruncateText | ignore | `string[]` | No | `[' ', '.', ',']` | Characters to ignore at truncated end of string. Default is ' ', '.', ',' |
-| TruncateText | debounce | `number` | No | `0` | Debounce delay in milliseconds |
-| TruncateText | onUpdate | `(isTruncated: boolean, truncatedText?: string) => void` | No | - | Callback when truncated text has changed |
-| TruncateText | shouldTruncateWhenInvisible | `boolean` | No | - | Force truncation of invisible elements (hack; will be removed in favor of a better fix) |
 
 ### Usage
 

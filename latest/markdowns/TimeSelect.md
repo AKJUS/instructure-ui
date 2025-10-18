@@ -24,54 +24,31 @@ type: example
 
 To use `TimeSelect` controlled, simply provide the `value` prop an ISO string. The `onChange` callback provides the ISO value of the corresponding option that was selected. Use this value to update the state.
 
-- ```javascript
-  class Example extends React.Component {
-    state = {
-      value: '2020-05-18T23:59:00'
-    }
+```js
+---
+type: example
+---
+const Example = () => {
+  const [value, setValue] = useState('2020-05-18T23:59:00')
 
-    handleChange = (e, { value }) => {
-      this.setState({ value })
-    }
-
-    render() {
-      return (
-        <TimeSelect
-          renderLabel="Choose a time"
-          placeholder="e.g., 4:00:00 PM"
-          value={this.state.value}
-          step={15}
-          format="LTS"
-          onChange={this.handleChange}
-        />
-      )
-    }
-  }
-  render(<Example />)
-  ```
-
-- ```js
-  const Example = () => {
-    const [value, setValue] = useState('2020-05-18T23:59:00')
-
-    const handleChange = (e, { value }) => {
-      setValue(value)
-    }
-
-    return (
-      <TimeSelect
-        renderLabel="Choose a time"
-        placeholder="e.g., 4:00:00 PM"
-        value={value}
-        step={15}
-        format="LTS"
-        onChange={handleChange}
-      />
-    )
+  const handleChange = (e, { value }) => {
+    setValue(value)
   }
 
-  render(<Example />)
-  ```
+  return (
+    <TimeSelect
+      renderLabel="Choose a time"
+      placeholder="e.g., 4:00:00 PM"
+      value={value}
+      step={15}
+      format="LTS"
+      onChange={handleChange}
+    />
+  )
+}
+
+render(<Example />)
+```
 
 ### Freeform input
 
@@ -112,7 +89,7 @@ type: embed
 
 | Component | Prop | Type | Required | Default | Description |
 |-----------|------|------|----------|---------|-------------|
-| TimeSelect | renderLabel | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | Yes | - | The form field label. |
+| TimeSelect | renderLabel | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | Yes | - | The form field label. |
 | TimeSelect | defaultToFirstOption | `boolean` | No | `false` | Whether to default to the first option when `defaultValue` hasn't been specified. |
 | TimeSelect | value | `string` | No | - | An ISO 8601 formatted date string representing the current selected value. If defined, the component will act controlled and will not manage its own state. |
 | TimeSelect | defaultValue | `string` | No | - | An ISO 8601 formatted date string to use if `value` isn't provided. |
@@ -137,9 +114,9 @@ type: embed
 | TimeSelect | onHideOptions | `(event: React.SyntheticEvent) => void` | No | - | Callback fired when the options list is hidden. |
 | TimeSelect | inputRef | `(inputElement: HTMLInputElement \| null) => void` | No | - | A ref to the html `input` element. |
 | TimeSelect | listRef | `(listElement: HTMLUListElement \| null) => void` | No | - | A ref to the html `ul` element. |
-| TimeSelect | renderEmptyOption | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | `'---'` | Content to display in the list when no options are available. |
-| TimeSelect | renderBeforeInput | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display before the text input. This will commonly be an icon. |
-| TimeSelect | renderAfterInput | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display after the text input. This content will replace the default arrow icons. |
+| TimeSelect | renderEmptyOption | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | `'---'` | Content to display in the list when no options are available. |
+| TimeSelect | renderBeforeInput | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display before the text input. This will commonly be an icon. |
+| TimeSelect | renderAfterInput | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display after the text input. This content will replace the default arrow icons. |
 | TimeSelect | locale | `string` | No | - | A standard language identifier. See [moment.js i18n](https://momentjs.com/docs/#/i18n/) for more details. This property can also be set via a context property and if both are set then the component property takes precedence over the context property. The web browser's locale will be used if no value is set via a component property or a context property. |
 | TimeSelect | timezone | `string` | No | - | A timezone identifier in the format: Area/Location See [List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for the list of possible options. This property can also be set via a context property and if both are set then the component property takes precedence over the context property. The web browser's timezone will be used if no value is set via a component property or a context property. |
 | TimeSelect | allowNonStepInput | `boolean` | No | `false` | Whether to allow the user to enter non-step divisible values in the input field. Note that even if this is set to `false` one can enter non-step divisible values programatically. The user will need to enter the value exactly (except for lower/uppercase) as specified by the `format` prop for it to be accepted. Default is `false` |

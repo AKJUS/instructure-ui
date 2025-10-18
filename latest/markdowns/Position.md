@@ -3,12 +3,6 @@
 
 A component that positions content with respect to a designated target.
 
-### Important Upgrade Notes
-
-Codemods are available to automatically update any props that have changed. However, there are some breaking changes that will need to be addressed manually. These changes and are described below.
-
-- `Position.Target` and `Position.Content` are no longer in use. The target is now defined via the `renderTarget` prop and the children of a Position will be rendered as the positioned content.
-
 ### Internationalization
 
 `Position` placement can be internationalized for right to left languages. The
@@ -305,7 +299,7 @@ render(<Example />)
 
 | Component | Prop | Type | Required | Default | Description |
 |-----------|------|------|----------|---------|-------------|
-| Position | renderTarget | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | The node to use as the position target |
+| Position | renderTarget | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | The node to use as the position target |
 | Position | target | `Element \| (() => Element \| null) \| null` | No | - | The target to be used when not using `renderTarget` |
 | Position | placement | `\| 'top' \| 'bottom' \| 'start' \| 'end' \| 'top start' \| 'top center' \| 'top end' \| 'top stretch' \| 'bottom start' \| 'bottom center' \| 'bottom end' \| 'bottom stretch' \| 'start top' \| 'start center' \| 'start bottom' \| 'start stretch' \| 'end top' \| 'end center' \| 'end bottom' \| 'end stretch' \| 'center start' \| 'center end' \| 'offscreen'` | No | `'bottom center'` | The placement of the content in relation to the target |
 | Position | mountNode | `Element \| (() => Element \| null) \| null` | No | `null` | An element or a function returning an element to use as the mount node for the `<Position />` (defaults to `document.body`) |

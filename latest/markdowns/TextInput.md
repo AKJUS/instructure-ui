@@ -18,7 +18,10 @@ type: example
 
 #### Controlled TextInput
 
-- ```javascript
+```js
+---
+type: example
+---
   class ControlledTextInputExample extends React.Component {
     constructor(props) {
       super(props)
@@ -102,9 +105,12 @@ type: example
   }
 
   render(<ControlledTextInputExample />)
-  ```
+```
 
-- ```javascript
+```js
+---
+type: example
+---
   const ControlledTextInputExample = () => {
     const [value, setValue] = useState('Supertramp')
     const [disabled, setDisabled] = useState(false)
@@ -173,7 +179,7 @@ type: example
   }
 
   render(<ControlledTextInputExample />)
-  ```
+```
 
 ### Prepending and appending content
 
@@ -181,7 +187,10 @@ TextInput accepts focusable and non-focusable content before and/or after
 the input text. A common use case is adding an icon or avatar to the input.
 Focusable content will be focused separately from the input itself.
 
-- ```javascript
+```js
+---
+type: example
+---
   class ExtraContentExample extends React.Component {
     constructor(props) {
       super(props)
@@ -241,9 +250,12 @@ Focusable content will be focused separately from the input itself.
   }
 
   render(<ExtraContentExample />)
-  ```
+```
 
-- ```javascript
+```js
+---
+type: example
+---
   const ExtraContentExample = () => {
     const [value, setValue] = useState('')
 
@@ -295,7 +307,7 @@ Focusable content will be focused separately from the input itself.
   }
 
   render(<ExtraContentExample />)
-  ```
+```
 
 Another common usecase is to add an `IconButton` at the end of a TextInput, e.g. for revealing the content of a password field. In these cases, please use the `withBorder={false}` and `withBackground={false}` props for the IconButton.
 
@@ -411,7 +423,7 @@ type: embed
 
 | Component | Prop | Type | Required | Default | Description |
 |-----------|------|------|----------|---------|-------------|
-| TextInput | renderLabel | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | The form field label. |
+| TextInput | renderLabel | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | The form field label. |
 | TextInput | type | `'text' \| 'email' \| 'url' \| 'tel' \| 'search' \| 'password'` | No | `'text'` | Determines the underlying native HTML `<input>` element's `type`. For more see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url |
 | TextInput | id | `string` | No | - | The id of the text input. One is generated if not supplied. |
 | TextInput | value | `string` | No | - | the selected value (must be accompanied by an `onChange` prop) |
@@ -429,8 +441,8 @@ type: embed
 | TextInput | elementRef | `(element: Element \| null) => void` | No | - | provides a reference to the underlying html root element |
 | TextInput | inputRef | `(inputElement: HTMLInputElement \| null) => void` | No | - | a function that provides a reference to the actual input element |
 | TextInput | inputContainerRef | `(element: HTMLSpanElement \| null) => void` | No | - | a function that provides a reference a parent of the input element |
-| TextInput | renderBeforeInput | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display before the input text, such as an icon |
-| TextInput | renderAfterInput | `\| keyof ReactHTML \| keyof ReactSVG \| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display after the input text, such as an icon |
+| TextInput | renderBeforeInput | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display before the input text, such as an icon |
+| TextInput | renderAfterInput | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Content to display after the input text, such as an icon |
 | TextInput | onChange | `(event: React.ChangeEvent<HTMLInputElement>, value: string) => void` | No | - | Callback executed when the input fires a change event. @param {Object} event - the event object @param {string} value - the string value of the input |
 | TextInput | onBlur | `(event: React.FocusEvent<HTMLInputElement>) => void` | No | - | Callback fired when input loses focus. |
 | TextInput | onFocus | `(event: React.FocusEvent<HTMLInputElement>) => void` | No | - | Callback fired when input receives focus. |

@@ -96,56 +96,10 @@ type: example
 
 If you need to prevent text wrapping, you can use the [TruncateText](#TruncateText) util. You can also conditionally render a [Tooltip](#Tooltip) with the full text when truncation occurs.
 
-- ```js
-  class Example extends React.Component {
-    state = {
-      isTruncated: false
-    }
-
-    handleUpdate = (isTruncated) => {
-      if (this.state.isTruncated !== isTruncated) {
-        this.setState({ isTruncated })
-      }
-    }
-
-    renderButton() {
-      return (
-        <Button color="primary">
-          <TruncateText onUpdate={this.handleUpdate}>
-            {this.props.message}
-          </TruncateText>
-        </Button>
-      )
-    }
-
-    render() {
-      return (
-        <View
-          display="block"
-          width="10rem"
-          margin="small"
-          padding="small none"
-          withVisualDebug
-        >
-          {this.state.isTruncated ? (
-            <Tooltip
-              renderTip={this.props.message}
-              mountNode={() => document.getElementById('main')}
-            >
-              {this.renderButton()}
-            </Tooltip>
-          ) : (
-            this.renderButton()
-          )}
-        </View>
-      )
-    }
-  }
-
-  render(<Example message="A Button With a Whole Lot of Text" />)
-  ```
-
-- ```js
+```js
+---
+type: example
+---
   const Example = ({ message }) => {
     const [isTruncated, setIsTruncated] = useState(false)
 
@@ -186,7 +140,7 @@ If you need to prevent text wrapping, you can use the [TruncateText](#TruncateTe
   }
 
   render(<Example message="A Button With a Whole Lot of Text" />)
-  ```
+```
 
 ### Display
 
@@ -380,7 +334,7 @@ type: embed
 | Button | textAlign | `'start' \| 'center'` | No | `'center'` | Sets the alignment of the `Button` children and/or icon. |
 | Button | withBackground | `boolean` | No | `true` | Specifies if the `Button` should render with a solid background. When false, the background is transparent. |
 | Button | margin | `Spacing` | No | `'0'` | Valid values are `0`, `none`, `auto`, `xxx-small`, `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large`. Apply these values via familiar CSS-like shorthand. For example: `margin="small auto large"`. |
-| Button | cursor | `Cursor` | No | `'pointer'` | Specify a mouse cursor to use when hovering over the button. The `pointer` cursor is used by default. |
+| Button | cursor | `\| 'auto' \| 'default' \| 'none' \| 'context-menu' \| 'help' \| 'pointer' \| 'progress' \| 'wait' \| 'cell' \| 'crosshair' \| 'text' \| 'vertical-text' \| 'alias' \| 'copy' \| 'move' \| 'no-drop' \| 'not-allowed' \| 'grab' \| 'grabbing' \| 'all-scroll' \| 'col-resize' \| 'row-resize' \| 'n-resize' \| 'e-resize' \| 's-resize' \| 'w-resize' \| 'ne-resize' \| 'nw-resize' \| 'se-resize' \| 'sw-resize' \| 'ew-resize' \| 'ns-resize' \| 'nesw-resize' \| 'nwse-resize' \| 'zoom-in' \| 'zoom-out'` | No | `'pointer'` | Specify a mouse cursor to use when hovering over the button. The `pointer` cursor is used by default. |
 | Button | href | `string` | No | - | Specifies an href attribute for the `Button`'s underlying html element. |
 | Button | renderIcon | `React.ReactNode \| (() => React.ReactNode)` | No | - | An icon, or function that returns an icon. |
 | Button | onClick | `( event: React.KeyboardEvent<ViewProps> \| React.MouseEvent<ViewProps> ) => void` | No | - | Callback fired when the `Button` is clicked. |
