@@ -25,14 +25,14 @@
     "cypress": "^14.4.1",
     "cypress-axe": "^1.6.0",
     "eslint": "^8",
-    "eslint-config-next": "14.1.2",
+    "eslint-config-next": "16.1.6",
     "postcss": "^8.5.3",
     "tailwindcss": "4",
     "typescript": "^5"
   },
   "dependencies": {
     "@instructure/ui": "file:../packages/ui",
-    "next": "^15.5.7",
+    "next": "^15.5.10",
     "react": "^19.1",
     "react-dom": "^19.1"
   }
