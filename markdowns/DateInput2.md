@@ -1,7 +1,15 @@
 # DateInput2
 
 
-> _Info_: `DateInput2` is an upgrade to the [`DateInput`](/#DateInput) component, offering easier configuration, better UX, improved accessibility, and a year picker. Please consider updating to this for WCAG compatiblity and an overall better experience (for both devs and users).
+> **Deprecated:** `DateInput2` is deprecated and will not receive further updates. Its functionality has been merged into the latest version of [`DateInput`](/v11_7/DateInput) which has the same API. Please migrate to `DateInput` for continued support.
+
+### DateInput versions at a glance
+
+| Version                                      | API                          | Theming          | Accessibility   | Status          |
+| :------------------------------------------- | :--------------------------- | :--------------- | :-------------- | :-------------- |
+| [v11.6 DateInput](/v11_6/DateInput)          | Old (manual calendar wiring) | Old theming only | Has a11y issues | **Deprecated**  |
+| [v11.6 DateInput2](/v11_6/DateInput2) (this) | New (simple)                 | Old theming only | Good            | **Deprecated**  |
+| [v11.7 DateInput](/v11_7/DateInput)          | New (simple)                 | New theming      | Good            | **Recommended** |
 
 ### Minimal config
 
@@ -19,7 +27,9 @@ type: example
           screenReaderLabels={{
             calendarIcon: 'Calendar',
             nextMonthButton: 'Next month',
-            prevMonthButton: 'Previous month'
+            prevMonthButton: 'Previous month',
+            datePickerDialog: 'Date picker',
+            selectedLabel: 'Selected'
           }}
           value={inputValue}
           width="20rem"
@@ -30,9 +40,9 @@ type: example
           invalidDateErrorMessage="Invalid date"
         />
         <p>
-          Input Value: <code>{inputValue}</code>
+          <Text>Input Value: </Text><code>{inputValue}</code>
           <br />
-          UTC Date String: <code>{dateString}</code>
+          <Text>UTC Date String: </Text><code>{dateString}</code>
         </p>
       </div>
     )
@@ -62,26 +72,30 @@ const Example = () => {
 
   return (
     <div>
-      <p>US locale with default format:</p>
+      <Text as="p">US locale with default format:</Text>
       <DateInput2
         renderLabel="Choose a date"
         screenReaderLabels={{
           calendarIcon: 'Calendar',
           nextMonthButton: 'Next month',
-          prevMonthButton: 'Previous month'
+          prevMonthButton: 'Previous month',
+          datePickerDialog: 'Date picker',
+          selectedLabel: 'Selected'
         }}
         width="20rem"
         value={value}
         locale="en-us"
         onChange={(e, value) => setValue(value)}
       />
-      <p>US locale with german date format:</p>
+      <Text as="p">US locale with german date format:</Text>
       <DateInput2
         renderLabel="Choose a date"
         screenReaderLabels={{
           calendarIcon: 'Calendar',
           nextMonthButton: 'Next month',
-          prevMonthButton: 'Previous month'
+          prevMonthButton: 'Previous month',
+          datePickerDialog: 'Date picker',
+          selectedLabel: 'Selected'
         }}
         width="20rem"
         value={value2}
@@ -89,13 +103,15 @@ const Example = () => {
         dateFormat="de-de"
         onChange={(e, value) => setValue2(value)}
       />
-      <p>US locale with ISO date format:</p>
+      <Text as="p">US locale with ISO date format:</Text>
       <DateInput2
         renderLabel="Choose a date"
         screenReaderLabels={{
           calendarIcon: 'Calendar',
           nextMonthButton: 'Next month',
-          prevMonthButton: 'Previous month'
+          prevMonthButton: 'Previous month',
+          datePickerDialog: 'Date picker',
+          selectedLabel: 'Selected'
         }}
         width="20rem"
         value={value3}
@@ -146,7 +162,9 @@ type: example
           screenReaderLabels={{
             calendarIcon: 'Calendar',
             nextMonthButton: 'Next month',
-            prevMonthButton: 'Previous month'
+            prevMonthButton: 'Previous month',
+            datePickerDialog: 'Date picker',
+            selectedLabel: 'Selected'
           }}
           value={inputValue}
           width="20rem"
@@ -162,9 +180,9 @@ type: example
           }}
         />
         <p>
-          Input Value: <code>{inputValue}</code>
+          <Text>Input Value: </Text><code>{inputValue}</code>
           <br />
-          UTC Date String: <code>{dateString}</code>
+          <Text>UTC Date String: </Text><code>{dateString}</code>
         </p>
       </div>
     )
@@ -196,12 +214,12 @@ const Example = () => {
     // don't validate empty input
     if (!utcIsoDate && inputValue.length > 0) {
       setMessages([{
-        type: 'newError',
+        type: 'error',
         text: 'This is not a valid date'
       }])
     } else if (date < new Date('1990-01-01')) {
       setMessages([{
-        type: 'newError',
+        type: 'error',
         text: 'Select date after January 1, 1990'
       }])
     } else {
@@ -215,7 +233,9 @@ const Example = () => {
       screenReaderLabels={{
         calendarIcon: 'Calendar',
         nextMonthButton: 'Next month',
-        prevMonthButton: 'Previous month'
+        prevMonthButton: 'Previous month',
+        datePickerDialog: 'Date picker',
+        selectedLabel: 'Selected'
       }}
       width="20rem"
       value={value}
@@ -256,7 +276,9 @@ const Example = () => {
       screenReaderLabels={{
         calendarIcon: 'Calendar',
         nextMonthButton: 'Next month',
-        prevMonthButton: 'Previous month'
+        prevMonthButton: 'Previous month',
+        datePickerDialog: 'Date picker',
+        selectedLabel: 'Selected'
       }}
       value={inputValue}
       locale="en-us"
@@ -278,8 +300,8 @@ render(<Example />)
 
 | Component | Prop | Type | Required | Default | Description |
 |-----------|------|------|----------|---------|-------------|
-| DateInput2 | renderLabel | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | Yes | - | Specifies the input label. |
-| DateInput2 | screenReaderLabels | `{ calendarIcon: string prevMonthButton: string nextMonthButton: string }` | Yes | - |  |
+| DateInput2 | renderLabel | `Renderable` | Yes | - | Specifies the input label. |
+| DateInput2 | screenReaderLabels | `{ calendarIcon: string prevMonthButton: string nextMonthButton: string // TODO: Make this field required in the next version. Currently optional to avoid breaking change. datePickerDialog?: string selectedLabel?: string }` | Yes | - | Accessible labels for the calendar button, month navigation buttons, date picker dialog, and selected date state. |
 | DateInput2 | value | `string` | No | - | Specifies the input value. |
 | DateInput2 | placeholder | `string` | No | - | Placeholder text for the input field. If it's left undefined it will display a hint for the date format (like `DD/MM/YYYY`). |
 | DateInput2 | onChange | `( event: React.SyntheticEvent, inputValue: string, utcDateString: string ) => void` | No | - | Callback fired when the input changes. |
@@ -295,7 +317,7 @@ render(<Example />)
 | DateInput2 | withYearPicker | `{ screenReaderLabel: string onRequestYearChange?: (e: SyntheticEvent, requestedYear: number) => void startYear: number endYear: number }` | No | - | If set, years can be picked from a dropdown. It accepts an object. screenReaderLabel: string // e.g.: i18n("pick a year") onRequestYearChange?:(e: React.MouseEvent,requestedYear: number): void // if set, on year change, only this will be called and no internal change will take place startYear: number // e.g.: 2001, sets the start year of the selectable list endYear: number // e.g.: 2030, sets the end year of the selectable list |
 | DateInput2 | dateFormat | `\| { parser: (input: string) => Date \| null formatter: (date: Date) => string } \| string` | No | - | By default the date format is determined by the locale but can be changed via this prop to an alternate locale (passing it in as a string) or a custom parser and formatter (both as functions) |
 | DateInput2 | onRequestValidateDate | `( event: React.SyntheticEvent, value: string, utcDateString: string ) => void` | No | - | Callback executed when the input fires a blur event or a date is selected from the picker. |
-| DateInput2 | renderCalendarIcon | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | Custom icon for the icon button opening the picker. |
+| DateInput2 | renderCalendarIcon | `Renderable` | No | - | Custom icon for the icon button opening the picker. |
 | DateInput2 | margin | `Spacing` | No | - | Margin around the component. Accepts a `Spacing` token. See token values and example usage in [this guide](https://instructure.design/#layout-spacing). |
 | DateInput2 | disabledDates | `string[] \| ((isoDateToCheck: string) => boolean)` | No | - |  |
 | DateInput2 | inputRef | `(inputElement: HTMLInputElement \| null) => void` | No | - | A function that provides a reference to the inner input element |

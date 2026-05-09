@@ -1,7 +1,15 @@
 # DateInput
 
 
-> _Note:_ we recommend to update to the new [`DateInput2`](/#DateInput2) which is easier to configure for developers, has a better UX, better accessibility features and a year picker. `DateInput` will be deprecated in the future.
+> **Deprecated:** This version of `DateInput` is deprecated. Please use the latest version of [`DateInput`](/v11_7/DateInput) which offers easier configuration, better UX, improved accessibility, and a year picker.
+
+### DateInput versions at a glance
+
+| Version                                    | API                          | Theming          | Accessibility   | Status          |
+| :----------------------------------------- | :--------------------------- | :--------------- | :-------------- | :-------------- |
+| [v11.6 DateInput](/v11_6/DateInput) (this) | Old (manual calendar wiring) | Old theming only | Has a11y issues | **Deprecated**  |
+| [v11.6 DateInput2](/v11_6/DateInput2)      | New (simple)                 | Old theming only | Good            | **Deprecated**  |
+| [v11.7 DateInput](/v11_7/DateInput)        | New (simple)                 | New theming      | Good            | **Recommended** |
 
 The `DateInput` component provides a visual interface for inputting date data.
 
@@ -198,6 +206,7 @@ class Example extends React.Component {
           isToday={date.isSame(todayDate, 'day')}
           isOutsideMonth={!date.isSame(renderedDate, 'month')}
           label={`${date.format('D')} ${date.format('MMMM')} ${date.format('YYYY')}`}
+          selectedLabel="Selected"
           onClick={this.handleDayClick}
         >
           {date.format('D')}
@@ -318,7 +327,7 @@ should be validated. If the value cannot be parsed as a valid date, or if the
 
 | Component | Prop | Type | Required | Default | Description |
 |-----------|------|------|----------|---------|-------------|
-| DateInput | renderLabel | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | Yes | - | Specifies the input label. |
+| DateInput | renderLabel | `Renderable` | Yes | - | Specifies the input label. |
 | DateInput | value | `string` | No | `''` | Specifies the input value. |
 | DateInput | size | `'small' \| 'medium' \| 'large'` | No | `'medium'` | Specifies the input size. |
 | DateInput | placeholder | `string` | No | - | Html placeholder text to display when the input has no value. This should be hint text, not a label replacement. |
@@ -344,8 +353,8 @@ should be validated. If the value cannot be parsed as a valid date, or if the
 | DateInput | onRequestRenderPrevMonth | `(e: React.MouseEvent) => void` | No | - | Callback fired requesting the previous month be rendered. |
 | DateInput | renderNavigationLabel | `React.ReactNode \| (() => React.ReactNode)` | No | - | Content to render in the calendar navigation header. The recommendation is to include the name of the current rendered month along with the year. |
 | DateInput | renderWeekdayLabels | `(React.ReactNode \| (() => React.ReactNode))[]` | No | - | An array of labels containing the name of each day of the week. The visible portion of the label should be abbreviated (no longer than three characters). Note that screen readers will read this content preceding each date as the `<Calendar />` is navigated. Consider using [AccessibleContent](AccessibleContent) with the `alt` prop containing the full day name for assistive technologies and the children containing the abbreviation. ex. `[<AccessibleContent alt="Sunday">Sun</AccessibleContent>, ...]` |
-| DateInput | renderNextMonthButton | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | A button to render in the calendar navigation header. The recommendation is to compose it with the [Button](Button) component, setting the `variant` prop to `icon`, the `size` prop to `small`, and setting the `icon` prop to [IconArrowOpenEnd](icons). |
-| DateInput | renderPrevMonthButton | `\| ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>> \| ComponentClass \| ReactNode \| ((data: P) => ReactNode \| Element) \| (() => ReactNode \| Element) \| Element` | No | - | A button to render in the calendar navigation header. The recommendation is to compose it with the [Button](Button) component, setting the `variant` prop to `icon`, the `size` prop to `small`, and setting the `icon` prop to [IconArrowOpenStart](icons). |
+| DateInput | renderNextMonthButton | `Renderable` | No | - | A button to render in the calendar navigation header. The recommendation is to compose it with the [Button](Button) component, setting the `variant` prop to `icon`, the `size` prop to `small`, and setting the `icon` prop to [IconArrowOpenEnd](icons). |
+| DateInput | renderPrevMonthButton | `Renderable` | No | - | A button to render in the calendar navigation header. The recommendation is to compose it with the [Button](Button) component, setting the `variant` prop to `icon`, the `size` prop to `small`, and setting the `icon` prop to [IconArrowOpenStart](icons). |
 | DateInput | children | `ReactElement<CalendarDayProps>[]` | No | - | children of type `<DateInput.Day />` There should be exactly 42 provided (6 weeks). |
 | DateInput | disabledDates | `string[] \| ((isoDateToCheck: string) => boolean)` | No | - |  |
 | DateInput | currentDate | `string` | No | - | ISO date string for the current date if necessary. Defaults to the current date in the user's timezone. |
@@ -354,6 +363,7 @@ should be validated. If the value cannot be parsed as a valid date, or if the
 | DateInput | locale | `string` | No | - | A standard language identifier. See [Moment.js](https://momentjs.com/timezone/docs/#/using-timezones/parsing-in-zone/) for more details. This property can also be set via a context property and if both are set then the component property takes precedence over the context property. The web browser's locale will be used if no value is set via a component property or a context property. |
 | DateInput | timezone | `string` | No | - | A timezone identifier in the format: *Area/Location* See [List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for the list of possible options. This property can also be set via a context property and if both are set then the component property takes precedence over the context property. The web browser's timezone will be used if no value is set via a component property or a context property. |
 | DateInput | withYearPicker | `{ screenReaderLabel: string onRequestYearChange?: (e: any, requestedYear: number) => void startYear: number endYear: number }` | No | - | If set, years can be picked from a dropdown. It accepts an object. screenReaderLabel: string // e.g.: i18n("pick a year") onRequestYearChange?:(e: React.MouseEvent,requestedYear: number): void // if set, on year change, only this will be called and no internal change will take place startYear: number // e.g.: 2001, sets the start year of the selectable list endYear: number // e.g.: 2030, sets the end year of the selectable list |
+| DateInput | selectedLabel | `string` | No | - | Screen reader label appended to the date label when the day is selected. Used to announce the selected state to assistive technologies. |
 
 ### Usage
 

@@ -99,6 +99,26 @@ type: example
   </FormFieldGroup>
 ```
 
+### Required Fields
+
+Whenever a `FormFieldGroup` contains required fields, you must include a note explaining what the asterisk means — typically "Fields marked with an asterisk (\*) are required."
+
+```js
+---
+type: example
+---
+<FormFieldGroup
+  description="Contact Information"
+  rowSpacing="small"
+  layout="stacked"
+>
+  <Text>Fields marked with an asterisk <span aria-hidden="true">(*)</span> are required.</Text>
+  <TextInput renderLabel="Full Name" isRequired />
+  <TextInput renderLabel="Email Address" isRequired />
+  <TextInput renderLabel="Phone Number" />
+</FormFieldGroup>
+```
+
 ### Guidelines
 
 ```js
@@ -118,7 +138,7 @@ type: embed
 | Component | Prop | Type | Required | Default | Description |
 |-----------|------|------|----------|---------|-------------|
 | FormFieldGroup | description | `React.ReactNode` | Yes | - |  |
-| FormFieldGroup | as | `keyof JSX.IntrinsicElements \| ComponentType<P>` | No | `'fieldset'` | the element type to render as |
+| FormFieldGroup | as | `AsElementType` | No | `'fieldset'` | the element type to render as |
 | FormFieldGroup | messages | `FormMessage[]` | No | - | Array of objects with shape: `{ text: React.ReactNode, type: One of: ['newError', 'error', 'hint', 'success', 'screenreader-only'] }` |
 | FormFieldGroup | messagesId | `string` | No | - | id for the form field messages |
 | FormFieldGroup | disabled | `boolean` | No | `false` |  |

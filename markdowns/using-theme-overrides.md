@@ -99,7 +99,7 @@ type: example
 </InstUISettingsProvider>
 ```
 
-### Overriding theme for a specific component in a subtree
+### Overriding theme for all components in a subtree
 
 You can override the theme variables of specific components too with the `componentOverrides` key. You can do this for every theme or for just a given theme.
 
@@ -116,11 +116,27 @@ type: example
     </Alert>
 
     <InstUISettingsProvider
-      theme={{
-        componentOverrides: {
+      themeOverride={{
+        components:{
           Alert: {
             infoIconBackground: "darkblue",
             infoBorderColor: "darkblue"
+          },
+          Pill:{
+
+          }
+        }
+      }}
+    >
+    <InstUISettingsProvider
+      themeOverride={{
+        components:{
+          Alert: {
+            infoIconBackground: "darkblue",
+            infoBorderColor: "darkblue"
+          },
+          Pill:{
+            infoTextColor:"red"
           }
         }
       }}
@@ -128,6 +144,14 @@ type: example
       <Alert variant="info" margin="small">
         My icon background and border should be dark blue in any theme.
       </Alert>
+       <Pill
+    statusLabel="Status"
+    color="info"
+    margin="x-small"
+  >
+    Draft
+  </Pill>
+    </InstUISettingsProvider>
     </InstUISettingsProvider>
 
     <InstUISettingsProvider
@@ -174,7 +198,7 @@ type: code
 </InstUISettingsProvider>
 ```
 
-#### Override function
+#### Override function for all instances
 
 The `InstUISettingsProvider` accepts a `function`. The override function's first parameter is the currently applied theme object. It should return a valid theme or override object.
 
@@ -204,11 +228,11 @@ type: example
 
 ### Overriding theme for a single component
 
-Themeable components (that implement the [withStyle](withStyle) decorator) accept a `themeOverride` prop. This prop let's you override the component's own theme. It accepts an object or a function.
+Themeable components (that implement the [withStyleNew](withStyleNew) decorator) accept a `themeOverride` prop. This prop let's you override the component's own theme. It accepts an object or a function.
 
 The available theme variables are always displayed at the bottom of the component's page (e.g.: [Button component theme variables](/#Button/#ButtonTheme)).
 
-#### Override object
+#### Override object for a single component
 
 ```js
 ---
@@ -221,9 +245,12 @@ type: example
 
   <div>
     <Button color='primary'
-      themeOverride={{ primaryBackground: "purple" }}
+      themeOverride={{
+        primaryBackground: "purple",
+        borderRadius: '999rem'
+    }}
       margin="small 0 large">
-      Purple Primary Button
+      Purple Primary Button with rounded corners
     </Button>
     <InstUISettingsProvider
       theme={{
@@ -247,7 +274,7 @@ type: example
 </div>
 ```
 
-#### Override function
+#### Override function for a single component
 
 The override function's first parameter is the component's own theme object, the second is the main theme object.
 
@@ -483,7 +510,7 @@ const Example = () => {
 
           <hr style={{width:'100%'}}/>
           <h3><code>SideNavBar</code> branding</h3>
-          <Flex gap="large small">
+          <Flex gap="small">
             <Flex.Item size="45%">
               <TextInput renderLabel="ic-brand-global-nav-bgd" value={icBrandGlobalNavBgd} onChange={(e, v) => setIcBrandGlobalNavBgd(v)}/>
               <TextInput renderLabel="ic-global-nav-link-hover" value={icGlobalNavLinkHover} onChange={(e, v) => setIcGlobalNavLinkHover(v)}/>
