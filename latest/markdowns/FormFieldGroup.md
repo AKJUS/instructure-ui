@@ -16,10 +16,11 @@ type: example
     rowSpacing="small"
     layout="inline"
     vAlign="middle"
+    margin="general.spaceMd 0"
   >
     <TextInput renderLabel="Favorite Breakfast Eatery"
       messages={[
-      { text: 'Invalid name', type: 'newError' }
+      { text: 'Invalid name', type: 'error' }
       ]}
     />
     <TextInput renderLabel="Favorite Side Dish" />
@@ -79,7 +80,7 @@ type: example
     layout="stacked"
     rowSpacing="large"
     messages={[
-    { text: 'Complete All Fields', type: 'newError' }
+    { text: 'Complete All Fields', type: 'error' }
     ]}
   >
     <RadioInputGroup
@@ -141,13 +142,15 @@ type: embed
 | FormFieldGroup | as | `AsElementType` | No | `'fieldset'` | the element type to render as |
 | FormFieldGroup | messages | `FormMessage[]` | No | - | Array of objects with shape: `{ text: React.ReactNode, type: One of: ['newError', 'error', 'hint', 'success', 'screenreader-only'] }` |
 | FormFieldGroup | messagesId | `string` | No | - | id for the form field messages |
-| FormFieldGroup | disabled | `boolean` | No | `false` |  |
+| FormFieldGroup | disabled | `boolean` | No | `false` | Whether the field group is disabled. When true, the disabled prop is propagated to all child components, error and success messages will be hidden. |
+| FormFieldGroup | readOnly | `boolean` | No | - | Whether the field group is read-only. When true, error and success messages will be hidden. |
 | FormFieldGroup | children | `React.ReactNode` | No | - |  |
 | FormFieldGroup | layout | `'stacked' \| 'columns' \| 'inline'` | No | - |  |
 | FormFieldGroup | rowSpacing | `'none' \| 'small' \| 'medium' \| 'large'` | No | `'medium'` |  |
 | FormFieldGroup | colSpacing | `'none' \| 'small' \| 'medium' \| 'large'` | No | `'small'` |  |
 | FormFieldGroup | vAlign | `'top' \| 'middle' \| 'bottom'` | No | `'middle'` |  |
 | FormFieldGroup | startAt | `'small' \| 'medium' \| 'large' \| 'x-large' \| null` | No | - |  |
+| FormFieldGroup | margin | `Spacing` | No | - | Valid values are `0`, `none`, `auto`, and Spacing token values, see https://instructure.design/layout-spacing. Apply these values via familiar CSS-like shorthand. For example, `margin="general.spaceMd auto"`. |
 | FormFieldGroup | elementRef | `(element: Element \| null) => void` | No | - | provides a reference to the underlying html root element |
 | FormFieldGroup | isGroup | `` | No | `true` |  |
 
@@ -163,6 +166,6 @@ Import the component:
 
 ```javascript
 /*** ES Modules (with tree shaking) ***/
-import { FormFieldGroup } from '@instructure/ui-form-field'
+import { FormFieldGroup } from '@instructure/ui-form-field/v11_7'
 ```
 
